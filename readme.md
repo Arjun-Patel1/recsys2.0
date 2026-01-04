@@ -2,94 +2,78 @@
 google drive link rating.csv:- https://drive.google.com/file/d/1WsFSjJtkFeHTF-nHWGjFlGd7xtA7tFWp/view?usp=sharing
 google drive link als.csv:- https://drive.google.com/file/d/1pq0nw2ATnzMTiudG4NHObNP1ydPijYIB/view?usp=sharing
 
-🎬 Mini Hybrid Movie Recommendation System (100 Movies)
+# 🎬 Mini Hybrid Movie Recommendation System
 
-This project is a mini, end-to-end hybrid recommender system built using a subset of 100 movies from the MovieLens dataset to demonstrate real-world recommendation system design while keeping the repository lightweight and GitHub-friendly.
+A **production-style hybrid recommender system** built using **Collaborative Filtering (ALS)** and **Content-Based Filtering**, demonstrated on a **lightweight 100-movie subset** of the MovieLens dataset for fast execution and GitHub-friendly sharing.
 
-🔍 Project Overview
+This project mirrors **real-world recommender system design** while keeping the repository small and easy to run locally.
 
-The system combines:
+---
 
-Collaborative Filtering (ALS) using implicit feedback
+## 🚀 Key Features
 
-Content-Based Filtering using MovieLens genome tag relevance
+- Hybrid Recommendation Engine (ALS + Content-Based)
+- Cold-start user handling
+- Sparse matrix optimization (CSR)
+- Movie similarity using genome tag relevance
+- Streamlit web app with:
+  - Movie posters
+  - Clickable links
+  - Modern Netflix-style UI
+- Fully reproducible pipeline
 
-Hybrid Recommendation Strategy (weighted combination)
+---
 
-Streamlit Web App with movie posters and clickable links (TMDB API)
+## 📦 Dataset (Mini Version)
 
-This mini version is intentionally reduced to 100 movies for:
+This repository uses a **reduced dataset of 100 movies** derived from MovieLens 25M.
 
-Easy cloning & execution
+| Component | Description |
+|---------|------------|
+| Movies | 100 selected movies |
+| Ratings | Filtered ratings for selected movies |
+| Content | Genome tag relevance vectors |
+| Purpose | Fast demo & GitHub hosting |
 
-Fast training and inference
+> ⚠️ **Note:**  
+> This is a **demonstration-scale dataset**.  
+> The same pipeline scales to **10K+ movies and millions of users** in production.
 
-Clean GitHub presentation for recruiters
+---
 
-📦 Dataset Details (Mini Version)
+## 🧠 Recommendation Techniques
 
-Movies: 100
+### 1️⃣ Collaborative Filtering (ALS)
+- Matrix factorization using the `implicit` library
+- Learns latent user–item interactions
+- Optimized using sparse CSR matrices
 
-Ratings: Filtered to include only these movies
+### 2️⃣ Content-Based Filtering
+- Movie similarity via genome tag relevance
+- Cosine similarity on normalized feature vectors
+- Handles cold-start users
 
-Content Features: Genome tag relevance (subset)
-
-Source: MovieLens 25M (processed & reduced)
-
-Files used:
-
-data/
-├── movies_10k.csv        → reduced to 100 movies
-├── ratings_10k.csv       → ratings for selected movies
-├── genome_scores_10k.csv → content features
-
-
-⚠️ This is a demonstration-scale dataset.
-The same pipeline scales to 10K / 25M+ movies in production environments.
-🧠 Recommendation Techniques Used
-1️⃣ Collaborative Filtering (ALS)
-
-Library: implicit
-
-Matrix factorization on user–item sparse matrix
-
-Captures user behavior & preferences
-
-2️⃣ Content-Based Filtering
-
-Uses genome tag relevance vectors
-
-Cosine similarity between movies
-
-Handles cold-start users
-
-3️⃣ Hybrid Recommendation
-
-Final score:
+### 3️⃣ Hybrid Strategy
+Final recommendation score:
 
 Hybrid Score = α × ALS Score + β × Content Score
 
+Combines personalization with semantic similarity.
 
-Balances personalization + similarity.
+---
 
-🖥️ Web Application (Streamlit)
+## 🖥️ Web Application (Streamlit)
 
 Features:
-
-User ID based recommendations
-
-Hybrid / ALS / Content views
-
-Movie posters & clickable links (TMDB API)
-
-Modern Netflix-style UI
-
-Lightweight & fast execution
+- User ID based recommendations
+- Hybrid / ALS / Content views
+- Movie posters fetched via TMDB API
+- Clickable movie pages
+- Responsive, modern UI
 
 Run locally:
-
+```bash
 streamlit run app.py
-
 🛠️ Tech Stack
 
 Python
@@ -107,20 +91,23 @@ Streamlit
 TMDB API
 
 Git & GitHub
-
 📁 Project Structure
 mini_rec_sys/
 │
 ├── app.py
+│
 ├── artifacts/
 │   ├── als_model.pkl
 │   ├── user_item_matrix.npz
 │   ├── content_features.npy
+│   ├── index_to_movie.pkl
+│   └── movieid_to_content_index.pkl
 │
 ├── data/
 │   ├── movies_10k.csv
 │   ├── ratings_10k.csv
-│   └── genome_scores_10k.csv
+│   ├── genome_scores_10k.csv
+│   └── links_10k.csv
 │
 ├── notebooks/
 │   ├── 01_create_mini_dataset.ipynb
@@ -128,25 +115,46 @@ mini_rec_sys/
 │
 └── README.md
 
-🚀 Scalability Note (Important for Recruiters)
+📈 Scalability & Production Readiness
 
-This project is a scaled-down version for GitHub.
+This mini version demonstrates:
+
+End-to-end recommender system pipeline
+
+Offline training & online inference
+
+Hybrid recommendation logic
 
 In production:
 
-Dataset → millions of users & items
+Datasets → millions of users & items
 
-Models → trained offline (Spark / GPU)
+Training → distributed (Spark / GPUs)
 
 Serving → APIs + caching layers
 
-Posters → batch metadata pipelines
+Metadata → batch ingestion pipelines
 
-The architecture and logic remain identical.
+🎯 Why This Project Stands Out
 
-🎯 Why This Project Matters
+Real-world recommender architecture
 
-✔ Demonstrates real recommender system design
-✔ Covers cold-start + personalization
-✔ Uses industry-standard tools
-✔ Clean, deployable, and explainable
+Cold-start & personalization handled
+
+Industry-standard tools
+
+Clean, deployable, and explainable
+
+Optimized for interviews & portfolios
+
+📌 Disclaimer
+
+This project uses a reduced dataset for demonstration purposes only.
+Original data source: MovieLens Dataset
+
+👤 Author
+
+Arjun Patel
+AI / Machine Learning Engineer
+
+🔗 GitHub: https://github.com/Arjun-Patel1
