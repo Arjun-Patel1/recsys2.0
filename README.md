@@ -246,14 +246,6 @@ Focus on diversity, freshness, and explainability
 
 Hybrid approach shows improved relevance over pure CF
 
-🎯 Why This Project Matters
-
-✔ Demonstrates real-world recommender evolution
-✔ Goes beyond academic baselines
-✔ Handles scale, sparsity, and cold-start
-✔ Combines ML + systems + UX
-✔ Strong portfolio & interview-ready project
-
 ⚠️ Disclaimer
 
 MovieLens data © GroupLens Research
