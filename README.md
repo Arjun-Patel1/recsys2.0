@@ -1,5 +1,6 @@
 🎬 Hybrid Movie Recommendation System (Production-Scale Evolution)
-
+https://hub.docker.com/repository/docker/arjunpatel89806/movie-recsys-api/general
+https://hub.docker.com/repository/docker/arjunpatel89806/movie-recsys-app/general
 A production-inspired hybrid movie recommendation system built on the MovieLens 25M dataset, evolving from a traditional ALS-based recommender into a modern, scalable system combining graph learning, vector search, time-aware ranking, and LLM-based reasoning.
 
 This project demonstrates how a recommender system can be iteratively improved to reflect real-world architectures used by platforms like Netflix, Amazon Prime, and Spotify.
