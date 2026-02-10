@@ -1,0 +1,11 @@
+tensorflow
+polars
+numpy
+scikit-learn
+pandas
+fastapi
+uvicorn
+faiss-cpu
+streamlit
+requests
+pydantic
