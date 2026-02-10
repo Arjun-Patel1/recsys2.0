@@ -1,4 +1,4 @@
-#   ScaleRec: Full-Stack Real-Time Recommendation Engine
+#   ScaleRec: Full-Stack Real-Time Recommendation Engine
 
 ![Python](https://img.shields.io/badge/Python-3.9-blue?logo=python) ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.10+-orange?logo=tensorflow) ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker) ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi) ![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-FF4B4B?logo=streamlit)
 
