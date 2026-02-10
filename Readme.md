@@ -117,5 +117,11 @@ Inference Latency: < 15ms per request (using FAISS HNSW Index).
 
 ## Author
 
-**Arjun**  
-AI Engineer | ML Engineer
+**👤 Arjun**  
+
+AI / Machine Learning Engineer
+
+GitHub: https://github.com/Arjun-Patel1
+
+LinkedIn: https://www.linkedin.com/in/arjunpatel97259
+r
