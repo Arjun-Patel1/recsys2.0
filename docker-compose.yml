@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: arjunpatel89806/movie-recsys-backend:latest
+    container_name: movie-backend
+    ports:
+      - "8000:8000"
+    networks:
+      - recsys-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: arjunpatel89806/movie-recsys-frontend:latest
+    container_name: movie-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      # This overrides the default "localhost" in your python code
+      # "backend" matches the service name defined above
+      - API_URL=http://backend:8000/recommend
+    depends_on:
+      - backend
+    networks:
+      - recsys-net
+    # Optional: Persist user database so you don't lose registrations on restart
+    volumes:
+      - ./users.json:/app/users.json
+
+networks:
+  recsys-net:
+    driver: bridge
