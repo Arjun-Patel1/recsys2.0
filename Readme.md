@@ -1,127 +1,164 @@
-#   ScaleRec: Full-Stack Real-Time Recommendation Engine
+# 🎬 ScaleRec: Full-Stack Real-Time Recommendation Engine
+https://hub.docker.com/repository/docker/arjunpatel89806/movie-recsys-api
+https://hub.docker.com/repository/docker/arjunpatel89806/movie-recsys-app
+ScaleRec is a production-grade recommendation system designed to mimic the Candidate Generation phase of modern streaming platforms like Netflix and YouTube.
 
-![Python](https://img.shields.io/badge/Python-3.9-blue?logo=python) ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.10+-orange?logo=tensorflow) ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker) ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi) ![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-FF4B4B?logo=streamlit)
+Unlike traditional static recommenders (Matrix Factorization), ScaleRec is session-aware. It uses a Transformer-based architecture (SASRec) to understand the sequence of user actions, enriched with semantic Genome Tags to solve the cold-start problem.
 
-**ScaleRec** is a production-grade recommendation system that mirrors the **candidate generation** phase of modern streaming platforms like Netflix and YouTube.
-
-Unlike traditional static recommenders, ScaleRec is **session-aware**. It uses a **Transformer-based architecture (SASRec)** to understand the *sequence* of user actions, injected with semantic **Genome Tags** to handle the cold-start problem.
-
----
-
-##  Full-Stack Architecture
-
-The system is deployed as a microservices application using Docker Compose:
-
-```mermaid
-graph LR
-    User[User / Client] -->|HTTP Request| UI[Streamlit Frontend]
-    UI -->|JSON Payload| API[FastAPI Backend]
-    API -->|1. Vector Search| FAISS[FAISS Index]
-    API -->|2. Inference| Model[SASRec Transformer]
-    Model -->|3. Genome Tags| PCA[PCA Embeddings]
-```
+The system is deployed as a full-stack microservices application with secure authentication, an interactive dashboard, and deep-linked IMDb metadata.
 
 ---
 
-##  Tech Stack
+## 🏗️ System Architecture
 
-- **Frontend:** Streamlit (Interactive UI for simulating user history)
-- **Backend:** FastAPI (Async REST API)
-- **Model:** TensorFlow 2.x (SASRec: Self-Attentive Sequential Recommender)
-- **Vector Search:** FAISS (sub-10ms retrieval)
-- **Data Engine:** Polars (Rust-based DataFrame library; 25M rows)
+ScaleRec follows a Two-Tower Architecture optimized for low-latency retrieval (<10ms).
 
----
-
-##  Why This Project Is Tier-1
-
-| Feature | Standard Student Project | ScaleRec (This Project) |
-|---|---|---|
-| **Model Type** | Matrix Factorization (Static) | Sequential Transformer (Dynamic) |
-| **Context** | Ignores time/order | Understands sequence (A  B  C) |
-| **New Items** | Fails (Cold Start) | Works via Genome Semantics |
-| **Serving** | Slow Python Script | FastAPI + FAISS (Production Speed) |
-| **Deployment** | Jupyter Notebook | Docker Containers (Cloud Ready) |
+User / Client  
+↓ Login & History  
+Streamlit Frontend  
+↓ JSON Payload  
+FastAPI Backend  
+→ Vector Search → FAISS Index  
+→ Model Inference → SASRec Transformer  
+→ Semantic Enrichment → Genome Tags (PCA)  
+→ Deep Links → IMDb  
 
 ---
 
-##  Quick Start (Docker)
+## 🧰 Tech Stack
 
-You can run the entire full-stack application with a single command.
+Frontend  
+- Streamlit (Custom CSS, State Management, Authentication)
 
-**Prerequisites**
-- Docker
-- Docker Compose
-- Optional: 4GB+ RAM allocated to Docker
+Backend  
+- FastAPI (Async REST APIs)
 
-**1. Run the app**
+Model  
+- TensorFlow 2.x  
+- SASRec (Self-Attentive Sequential Recommender)
 
-```bash
+Vector Search  
+- FAISS (HNSW, Approximate Nearest Neighbor Search)
+
+Data Engine  
+- Polars (Rust-based DataFrame library)  
+- Processes 25M+ interactions
+
+---
+
+## 🚀 Key Differentiators (Why This Is Tier-1)
+
+| Feature | Standard Student Project | ScaleRec |
+|------|----------------|----------------|
+| Model Type | Matrix Factorization (Static) | Sequential Transformer (Dynamic) |
+| Context | Ignores order | Learns behavior sequence (A → B → C) |
+| New Items | Fails (Cold Start) | Solved via Genome Semantics |
+| UI | Notebook / Terminal | Full Web App with Login |
+| Metadata | Text only | Clickable IMDb-linked cards |
+| Deployment | Local scripts | Dockerized microservices |
+
+---
+
+## ⚡ Quick Start (Docker)
+
+Run the entire full-stack application with one command.
+
+Prerequisites  
+- Docker & Docker Compose  
+- (Optional) 4GB+ RAM allocated to Docker
+
+### Run the App
+
+---
 docker-compose up --build
-```
 
-**2. Access the UI**
+### Access the Application
+- Frontend Dashboard: http://localhost:8501  
+- Backend API Docs: http://localhost:8000/docs  
 
-Open the Streamlit frontend in your browser (default port per `docker-compose.yml`).
+Default Login  
+
+Username: admin
+Password: recsys123
+(Or register a new account)
 
 ---
-**3. Access the API Docs**
 
-For backend testing, visit: http://localhost:8000/docs
+## 🛠️ Local Development (Manual Setup)
 
----
+### Environment Setup
 
-🛠️ Local Development (Without Docker)
-If you want to modify the code or train the model yourself:
-
-**1. Install Dependencies:**
-```
+conda create -n recsys python=3.9 -y
+conda activate recsys
 pip install -r requirements.txt
-```
 
-Run Data Pipeline (Polars):
+---
 
-```
-python src/01_preprocess.py       
-# Convert 25M ratings to sequences
-python src/02_process_genome.py  
-``# Compress tags via PCA
-```
-Train Model:
+### Data Pipeline (Polars)
 
-```
-python src/03_train.py        
-   
-# Train SASRec (GPU recommended)
-```
+Process the MovieLens 25M dataset.
 
-**Run Services:**
 
-Terminal 1: 
-```
+python src/01_preprocess.py
+python src/02_process_genome.py
+
+---
+
+### Model Training
+
+Train the SASRec Transformer.
+
+
+python src/03_train.py
+
+Achieved ~97.7% Top-K Recall on next-item prediction.
+
+---
+
+### Run Services
+
+Open two terminals.
+
+Terminal 1 (Backend)
+
 python src/04_inference.py
-```
 
-Terminal 2:
-```
+Terminal 2 (Frontend)
+
 streamlit run src/frontend.py
-```
+
+## 📸 Features Showcase
+
+Secure Authentication  
+- User registration and login  
+- User data persisted in a JSON store  
+
+Interactive Dashboard  
+- Dark-mode UI with Netflix-style movie cards  
+- Hover effects and Match Score indicators  
+
+Smart Metadata  
+- Movies linked directly to IMDb  
+- Uses links.csv to map MovieLens IDs to external databases  
+
+---
 
 ## 📊 Performance Metrics
-Dataset: MovieLens 25M (25 million interactions).
 
-Validation Accuracy (Next Item): ~97.7% (Top-K Recall).
+- Dataset: MovieLens 25M (25 million interactions)
+- Validation Accuracy: ~97.7% (Next-item prediction)
+- Inference Latency: < 15ms per request
+- Retrieval Engine: FAISS HNSW Index
 
-Inference Latency: < 15ms per request (using FAISS HNSW Index).
+---
 
 
 ## Author
 
-**👤 Arjun**  
-
-AI / Machine Learning Engineer
+**Arjun**  
+AI Engineer | ML Engineer
 
 GitHub: https://github.com/Arjun-Patel1
 
 LinkedIn: https://www.linkedin.com/in/arjunpatel97259
-r
+
