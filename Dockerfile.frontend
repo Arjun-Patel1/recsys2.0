@@ -1,4 +1,3 @@
-# Dockerfile.frontend
 FROM python:3.9-slim
 
 WORKDIR /app
@@ -6,20 +5,15 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy Source Code
 COPY src/ src/
 
-# Copy Artifacts needed for UI (Map, Embeddings, and LINKS)
 COPY processed_data/movie_id_map.parquet processed_data/
 COPY processed_data/genome_embeddings.npy processed_data/
 COPY processed_data/links.csv processed_data/
 
-# Expose Streamlit Port
 EXPOSE 8501
-
-# Configure Streamlit
 ENV STREAMLIT_SERVER_PORT=8501
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
-# Run the UI
+
 CMD ["streamlit", "run", "src/frontend.py"]
