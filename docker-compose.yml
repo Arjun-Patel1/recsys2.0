@@ -24,6 +24,8 @@ services:
       # This overrides the default "localhost" in your python code
       # "backend" matches the service name defined above
       - API_URL=http://backend:8000/recommend
+      # Securely pulls the API key from your local .env file into the container
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - backend
     networks:
