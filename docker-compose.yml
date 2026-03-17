@@ -1,3 +1,4 @@
+# docker-compose.yml
 version: '3.8'
 
 services:
@@ -5,35 +6,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.backend
-    image: arjunpatel89806/movie-recsys-backend:latest
-    container_name: movie-backend
     ports:
-      - "8000:8000"
-    networks:
-      - recsys-net
+      - "8001:8001"
+    volumes:
+      - ./processed_data:/app/processed_data  # Mounts data so you don't copy massive CSVs into the image
+    environment:
+      - TF_USE_LEGACY_KERAS=1
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
-    image: arjunpatel89806/movie-recsys-frontend:latest
-    container_name: movie-frontend
     ports:
-      - "8501:8501"
+      - "8000:8000"
+    volumes:
+      - ./processed_data:/app/processed_data
     environment:
-      # This overrides the default "localhost" in your python code
-      # "backend" matches the service name defined above
-      - API_URL=http://backend:8000/recommend
-      # Securely pulls the API key from your local .env file into the container
+      # Docker networking magic: 'backend' resolves to the container above
+      - API_URL=http://backend:8001/recommend 
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - backend
-    networks:
-      - recsys-net
-    # Optional: Persist user database so you don't lose registrations on restart
-    volumes:
-      - ./users.json:/app/users.json
-
-networks:
-  recsys-net:
-    driver: bridge
