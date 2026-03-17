@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Architecture | ScaleRec</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #090e17; --bg-panel: #111827; --bg-card: #1f2937; --accent-blue: #3b82f6; --accent-purple: #8b5cf6; --text-main: #f3f4f6; --text-muted: #9ca3af; --border: #374151; }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        .pane-left { width: 320px; background-color: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px; box-sizing: border-box; }
+        .pane-center { flex-grow: 1; padding: 50px; overflow-y: auto; }
+        .brand { background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 1.8rem; margin: 0; }
+        
+        .tech-box { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent-blue); padding: 20px; border-radius: 8px; margin-bottom: 20px; max-width: 800px; line-height: 1.6;}
+        .tech-box h3 { margin-top: 0; color: #38bdf8; }
+    </style>
+</head>
+<body>
+    <aside class="pane-left">
+        <h1 class="brand" style="margin-bottom: 20px;">ScaleRec</h1>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            <a href="{% url 'dashboard' %}" style="color: var(--text-muted); text-decoration: none; padding: 10px; border-radius: 6px; font-size: 0.9rem;">🏠 Engineering Dashboard</a>
+            <a href="{% url 'profile' %}" style="color: var(--text-muted); text-decoration: none; padding: 10px; border-radius: 6px; font-size: 0.9rem;">👤 User Profile</a>
+            <a href="{% url 'about' %}" style="color: var(--text-main); text-decoration: none; padding: 10px; background: var(--bg-card); border-radius: 6px; border: 1px solid var(--accent-blue); font-size: 0.9rem; font-weight: 600;">ℹ️ System Architecture</a>
+        </div>
+    </aside>
+
+    <main class="pane-center">
+        <h2 style="font-weight: 800; font-size: 1.8rem; margin-top: 0;">System Architecture</h2>
+        <p style="color: var(--text-muted); margin-bottom: 40px; max-width: 800px;">
+            ScaleRec is a Tier-1, decoupled machine learning application demonstrating modern production pipelines. 
+            It separates the user-facing web layer from the GPU-intensive inference layer.
+        </p>
+
+        <div class="tech-box">
+            <h3>1. The Recommender Core (SASRec + DCN-V2)</h3>
+            <p>The backend is powered by a two-stage deep learning pipeline built with TensorFlow Recommenders. It utilizes a Self-Attentive Sequential Recommendation (SASRec) model to capture temporal user behavior, passing latent vectors to a FAISS index for high-speed candidate retrieval. Candidates are then ranked using a Deep & Cross Network V2 (DCN-V2) to predict exact click-through/match rates.</p>
+        </div>
+
+        <div class="tech-box" style="border-left-color: var(--accent-purple);">
+            <h3>2. Microservice Backend (FastAPI + Uvicorn)</h3>
+            <p>The machine learning models are hosted on a lightning-fast, asynchronous Python backend via FastAPI. It exposes a strict REST API utilizing Pydantic data validation, ensuring the frontend only passes clean, tensor-ready arrays to the inference engine.</p>
+        </div>
+
+        <div class="tech-box" style="border-left-color: #10b981;">
+            <h3>3. Decoupled Web Layer (Django + In-Memory Caching)</h3>
+            <p>The frontend is an enterprise-grade Django application. It handles session security, CSRF protection, and user authentication. To achieve zero-latency UI rendering, the 60,000+ row dataset is loaded directly into a LocMemCache layer upon server initialization, bypassing disk I/O bottlenecks entirely.</p>
+        </div>
+        
+        <div class="tech-box" style="border-left-color: #f5c518;">
+            <h3>4. LLM Agent Copilot (Gemini 2.5 Flash)</h3>
+            <p>To overcome the temporal limitations of the static 25M movie dataset, a generative AI agent is integrated into the dashboard. It acts as an entertainment copilot, capable of retrieving information on modern releases, aggregating reviews, and generating actionable booking links dynamically.</p>
+        </div>
+    </main>
+</body>
+</html>

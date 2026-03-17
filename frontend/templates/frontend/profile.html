@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | ScaleRec</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090e17;     
+            --bg-panel: #111827;    
+            --bg-card: #1f2937;     
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #374151;
+        }
+
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Layout */
+        .pane-left { width: 320px; min-width: 320px; background-color: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px; box-sizing: border-box; }
+        .pane-center { flex-grow: 1; padding: 50px; overflow-y: auto; background-color: var(--bg-dark); }
+
+        /* Typography & Elements */
+        .brand { background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 1.8rem; margin: 0; }
+        .section-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 800; margin-bottom: 10px; }
+        
+        /* Navigation */
+        .nav-link { color: var(--text-muted); text-decoration: none; padding: 10px; border-radius: 6px; font-size: 0.9rem; transition: 0.2s; display: block; }
+        .nav-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-link.active { color: var(--text-main); background: var(--bg-card); border: 1px solid var(--accent-blue); font-weight: 600; }
+
+        /* Profile Specific Cards */
+        .info-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 30px; margin-top: 30px; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .data-row { display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: center; }
+        .data-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .data-row:first-child { padding-top: 0; }
+        .label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+        .value { font-weight: 600; font-size: 1rem; color: var(--text-main); }
+        
+        .status-badge { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+
+    <aside class="pane-left">
+        <h1 class="brand" style="margin-bottom: 20px;">ScaleRec</h1>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; flex-grow: 1;">
+            <a href="{% url 'dashboard' %}" class="nav-link">🏠 Engineering Dashboard</a>
+            <a href="{% url 'profile' %}" class="nav-link active">👤 User Profile</a>
+            <a href="{% url 'about' %}" class="nav-link">ℹ️ System Architecture</a>
+        </div>
+
+        <div class="flex-between" style="margin-bottom: 0;">
+            <div>
+                <div class="section-label" style="margin-bottom: 2px;">Active User</div>
+                <div style="font-weight: 600; font-size: 0.9rem;">{{ username }}</div>
+            </div>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" style="background:none; color:var(--text-muted); border:none; cursor:pointer; font-size: 0.8rem; font-weight: 600; padding:0;">Sign Out</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="pane-center">
+        <h2 style="font-weight: 800; font-size: 2rem; margin-top: 0; margin-bottom: 5px;">Account Overview</h2>
+        <p style="color: var(--text-muted); margin-top: 0;">Manage your ScaleRec profile settings and system access.</p>
+
+        <div class="info-card">
+            <div class="data-row">
+                <span class="label">System Username</span>
+                <span class="value">{{ user.username }}</span>
+            </div>
+            <div class="data-row">
+                <span class="label">Access Level</span>
+                <span class="value">Standard User</span>
+            </div>
+            <div class="data-row">
+                <span class="label">Account Status</span>
+                <span class="status-badge">Active</span>
+            </div>
+            <div class="data-row">
+                <span class="label">Date Provisioned</span>
+                <span class="value">{{ user.date_joined|date:"F d, Y" }}</span>
+            </div>
+            <div class="data-row">
+                <span class="label">Last Authentication</span>
+                <span class="value">{{ user.last_login|date:"F d, Y \a\t H:i" }}</span>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

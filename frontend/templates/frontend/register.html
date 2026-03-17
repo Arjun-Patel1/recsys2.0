@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | ScaleRec</title>
+    <style>
+        body { background-color: #000000; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 40px 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .logo { color: #E50914; font-size: 3rem; font-weight: 900; margin-bottom: 20px; letter-spacing: 2px; }
+        .auth-card { background-color: #141414; padding: 50px 60px; border-radius: 8px; width: 100%; max-width: 350px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); border: 1px solid #333; }
+        h1 { margin-top: 0; margin-bottom: 28px; font-size: 2rem; font-weight: 700; }
+        
+        /* Django Form Styling */
+        .auth-card p { margin-bottom: 15px; }
+        .auth-card label { display: block; margin-bottom: 5px; color: #b3b3b3; font-size: 0.9rem; }
+        .auth-card input { background: #333; border: 0; border-radius: 4px; color: #fff; height: 50px; padding: 0 20px; width: 100%; box-sizing: border-box; font-size: 1rem; }
+        .auth-card input:focus { background: #444; outline: none; }
+        .helptext { display: block; color: #737373; font-size: 0.8rem; margin-top: 5px; line-height: 1.3;}
+        ul.errorlist { color: #E50914; font-size: 0.8rem; list-style: none; padding: 0; margin-top: 5px; margin-bottom: 10px; }
+        
+        .btn-primary { background-color: #E50914; color: white; border: none; padding: 16px; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; font-size: 1rem; margin-top: 24px; transition: 0.2s; }
+        .btn-primary:hover { background-color: #f40612; }
+        
+        .footer-text { color: #737373; margin-top: 30px; font-size: 1rem; }
+        .footer-text a { color: #fff; text-decoration: none; }
+        .footer-text a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="logo">ScaleRec</div>
+    
+    <div class="auth-card">
+        <h1>Sign Up</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary">Create Account</button>
+        </form>
+        
+        <div class="footer-text">
+            Already have an account? <a href="{% url 'login' %}">Sign in.</a>
+        </div>
+    </div>
+
+</body>
+</html>

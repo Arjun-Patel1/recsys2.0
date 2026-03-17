@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | ScaleRec</title>
+    <style>
+        body { background-color: #000000; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .logo { color: #E50914; font-size: 3rem; font-weight: 900; margin-bottom: 20px; letter-spacing: 2px; }
+        .auth-card { background-color: #141414; padding: 50px 60px; border-radius: 8px; width: 100%; max-width: 350px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); border: 1px solid #333; }
+        h1 { margin-top: 0; margin-bottom: 28px; font-size: 2rem; font-weight: 700; }
+        
+        /* Django Form Styling */
+        .auth-card p { margin-bottom: 15px; }
+        .auth-card label { display: none; } /* Hide default django labels to look like Netflix */
+        .auth-card input { background: #333; border: 0; border-radius: 4px; color: #fff; height: 50px; padding: 0 20px; width: 100%; box-sizing: border-box; font-size: 1rem; transition: background 0.2s; }
+        .auth-card input:focus { background: #444; outline: none; }
+        .auth-card input::placeholder { color: #8c8c8c; }
+        .helptext, ul.errorlist { color: #E50914; font-size: 0.8rem; list-style: none; padding: 0; margin-top: 5px; }
+        
+        .btn-primary { background-color: #E50914; color: white; border: none; padding: 16px; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; font-size: 1rem; margin-top: 24px; transition: 0.2s; }
+        .btn-primary:hover { background-color: #f40612; }
+        
+        .footer-text { color: #737373; margin-top: 30px; font-size: 1rem; }
+        .footer-text a { color: #fff; text-decoration: none; }
+        .footer-text a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="logo">ScaleRec</div>
+    
+    <div class="auth-card">
+        <h1>Sign In</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary">Sign In</button>
+        </form>
+        
+        <div class="footer-text">
+            New to ScaleRec? <a href="{% url 'register' %}">Sign up now.</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('input[name="username"]').placeholder = "Username";
+        document.querySelector('input[name="password"]').placeholder = "Password";
+    </script>
+</body>
+</html>
