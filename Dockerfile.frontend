@@ -1,19 +1,20 @@
-FROM python:3.9-slim
+# Dockerfile.frontend
+FROM python:3.10-slim
 
 WORKDIR /app
 
+# Copy requirements and install them
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/ src/
+# Copy the entire project
+COPY . .
 
-COPY processed_data/movie_id_map.parquet processed_data/
-COPY processed_data/genome_embeddings.npy processed_data/
-COPY processed_data/links.csv processed_data/
+# Set PYTHONPATH
+ENV PYTHONPATH=/app
 
-EXPOSE 8501
-ENV STREAMLIT_SERVER_PORT=8501
-ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
+# Expose the Django port
+EXPOSE 8000
 
-
-CMD ["streamlit", "run", "src/frontend.py"]
+# Command to run the Django server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
