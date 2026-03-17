@@ -1,6 +1,3 @@
-Here is the ultimate, recruiter-ready `README.md`. I have added a dedicated, highly detailed **Tech Stack** section broken down by engineering domains (ML, Backend, Frontend, GenAI, and DevOps) so hiring managers can see your full-stack capabilities at a glance.
-
-Copy this entire block and overwrite your `README.md`:
 
 ````markdown
 # 🎬 ScaleRec: Tier-1 AI Recommendation Engine
