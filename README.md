@@ -1,4 +1,4 @@
-# Ultimate Recruiter-Ready README
+# ScaleRec
 
 ## Tech Stack
 
