@@ -1,19 +1,25 @@
+# Dockerfile.backend
+FROM python:3.10-slim
 
-FROM python:3.9-slim
-
+# Set the working directory inside the container
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (required for FAISS and TensorFlow)
+RUN apt-get update && apt-get install -y libomp-dev && rm -rf /var/lib/apt/lists/*
 
+# Copy requirements and install them
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY src/ src/
 
-COPY processed_data/ processed_data/
+# Copy the entire project
+COPY . .
 
-EXPOSE 8000
+# Set PYTHONPATH so 'import config' works perfectly
+ENV PYTHONPATH=/app
+ENV TF_USE_LEGACY_KERAS=1
 
+# Expose the FastAPI port
+EXPOSE 8001
 
-CMD ["python", "src/04_inference.py"]
+# Command to run the FastAPI server
+CMD ["uvicorn", "src.04_inference:app", "--host", "0.0.0.0", "--port", "8001"]
