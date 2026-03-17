@@ -51,15 +51,6 @@ The system architecture is designed to be scalable, modular, and maintainable, i
 5. Install dependencies: `pip install -r requirements.txt`
 6. Run the application: `python app.py`
 
-## Repository Structure Diagram
-```
-recsys2.0/
-├── app.py
-├── requirements.txt
-├── Dockerfile
-├── README.md
-└── ... (other files)
-```
 
 ## License
 MIT License
