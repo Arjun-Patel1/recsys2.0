@@ -1,5 +1,4 @@
 
-````markdown
 # 🎬 ScaleRec: Tier-1 AI Recommendation Engine
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
